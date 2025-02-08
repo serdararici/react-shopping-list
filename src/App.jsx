@@ -1,14 +1,68 @@
 import { useState } from 'react'
 
-
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <h1>shopping list</h1>
+      <div className='app'>
+        <Header/>
+        <Form/>
+        <List/>
+        <Summary/>
+      </div>
     </>
   )
 }
+
+function Header() {
+  return (
+    <h1>🛒 Shopping list</h1>
+  )
+}
+
+function Form() {
+  return(
+    <form className='form'>
+      <input type="text" placeholder='Ürün adı giriniz' />
+      <select >
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+      <button type="submit">Ekle</button>
+    </form>
+  )
+}
+
+function List() {
+  return (
+    <div className='list'>
+      <ul>
+        <Item />
+        <Item />
+        <Item />
+      </ul>
+    </div>
+    
+  );
+}
+
+function Item() {
+  return(
+    <li>
+      <span>Yumurta</span>
+      <button>X</button>
+    </li>
+  );
+}
+
+function Summary() {
+  return(
+    <footer className='summary'>Alişveriş sepetinizde 10 ürün bulunmaktadır.</footer>
+  );
+}
+
+
+
 
 export default App
