@@ -10,6 +10,7 @@ const data = [
 
 function App() {
   const [items, setItems] = useState(data);
+  const itemsCount = items.length;
 
   function handleAddItem(item) {
     setItems((items) => [...items,item]);
@@ -29,7 +30,7 @@ function App() {
         <Header/>
         <Form onAddItem={handleAddItem}/>
         <List items={items} onDeleteItem={handleDeleteItem} onUpdateItem={handleUpdateItem}/>
-        <Summary/>
+        <Summary items={items}/>
       </div>
     </>
   )
@@ -82,7 +83,10 @@ function List({items, onDeleteItem, onUpdateItem}) {
           onUpdateItem={onUpdateItem}/>))}
         </ul>
       </div>
-      ) : <p>no items</p>
+      ) : 
+      <div className='list'>
+        Sepette Ürün yok.
+      </div>
     }
     </>
 
@@ -101,9 +105,21 @@ function Item( { item, onDeleteItem, onUpdateItem} ) {
   );
 }
 
-function Summary() {
+function Summary({items}) {
+  if(items.length === 0 ) {
+    return (
+      <footer className='summary'>
+      <p> Alişveriş listenizi hazırlamaya başlayabilirsiniz.</p>
+      </footer>
+    );
+  }
+  const itemsCount = items.length;
+  const completedItemsCount = items.filter(item => item.completed).length;
   return(
-    <footer className='summary'>Alişveriş sepetinizde 10 ürün bulunmaktadır.</footer>
+    <footer className='summary'>
+      {itemsCount == completedItemsCount ? <p>Alişverişi tamaladınız. </p> : 
+      <p>Alişveriş sepetinizde {itemsCount} üründen {completedItemsCount} tanesini aldınız. </p>}
+      </footer>
   );
 }
 
