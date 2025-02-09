@@ -1,13 +1,30 @@
-import { useState } from 'react'
+import { use, useState } from 'react'
+
+const data = [
+  {id:1, title: "Yumurta", quantity: 10, completed: true },
+  {id:2, title: "Ekmek", quantity: 2, completed: true },
+  {id:3, title: "Süt", quantity: 5, completed: false },
+  {id:4, title: "Et", quantity: 3, completed: true },
+  {id:5, title: "Zeytin", quantity: 7, completed: false },
+];
 
 function App() {
+  const [items, setItems] = useState(data);
+
+  function handleAddItem(item) {
+    setItems((items) => [...items,item]);
+  }
+
+  function handleDeleteItem(id) {
+    setItems(items => items.filter(item => item.id !== id))
+  }
 
   return (
     <>
       <div className='app'>
         <Header/>
-        <Form/>
-        <List/>
+        <Form onAddItem={handleAddItem}/>
+        <List items={items} onDeleteItem={handleDeleteItem}/>
         <Summary/>
       </div>
     </>
@@ -20,38 +37,59 @@ function Header() {
   )
 }
 
-function Form() {
+function Form( { onAddItem } ) {
+  const [title, setTitle] = useState("");
+  const [quantity, setQuantity] = useState(1);
+  
+
+  function handleFormSubmit(e) {
+    e.preventDefault();
+    const item = {id: Date.now(), title, quantity, completed: false};
+    //console.log(item);
+
+    onAddItem(item);
+
+    setTitle("");
+    setQuantity(1);
+  }
+
   return(
-    <form className='form'>
-      <input type="text" placeholder='Ürün adı giriniz' />
-      <select >
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
+    <form className='form' onSubmit={handleFormSubmit}>
+      <input type="text" placeholder='Ürün adı giriniz' value={title} onChange={(e) => setTitle(e.target.value)}/>
+      <select value={quantity} onChange={(e) => setQuantity(Number(e.target.value))}>
+        {
+          Array.from({length:10}, (v,i) => i + 1)        // to produce numbers from 1 to 10
+          .map(num => <option key= {num} value={num}>{num}</option>)
+        }
       </select>
       <button type="submit">Ekle</button>
     </form>
   )
 }
 
-function List() {
+function List({items, onDeleteItem}) {
   return (
-    <div className='list'>
-      <ul>
-        <Item />
-        <Item />
-        <Item />
-      </ul>
-    </div>
+    <>
+    {items.length > 0 ? (
+      <div className='list'>
+        <ul>
+          { items.map((i,index) => (<Item item={i} key= {index} onDeleteItem={onDeleteItem}/>))}
+        </ul>
+      </div>
+      ) : <p>no items</p>
+    }
+    </>
+
+    
     
   );
 }
 
-function Item() {
+function Item( { item, onDeleteItem } ) {
   return(
     <li>
-      <span>Yumurta</span>
-      <button>X</button>
+      <span style={item.completed ? {textDecoration: "line-through"} : {}}>{item.quantity} { item.title }</span>
+      <button onClick={() => onDeleteItem(item.id)}>X</button>  
     </li>
   );
 }
