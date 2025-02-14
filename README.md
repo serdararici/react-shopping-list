@@ -1,5 +1,7 @@
 # 🛒 React Shopping List
 
+You can visit the live demo of the application here: [Live Demo](https://serdararici.github.io/react-shopping-list/)
+
 ![Shopping List](https://github.com/serdararici/react-shopping-list/blob/main/Shopping_List%2C.JPG)
 
 
@@ -43,10 +45,11 @@ cd react-shopping-list
 ```bash
 npm install
 ```
+Note: In Vite projects, manually installing the vite package is usually unnecessary. The npm install command will automatically install all required dependencies, including Vite.
 
 ### 4️⃣ Start the application:
 ```bash
-npm start
+npm run dev
 ```
 
 ## 🎥 Demo
@@ -54,5 +57,14 @@ You can view the project live here: https://youtu.be/EqCOKK0VBC8
 
 ## 🔗 GitHub Repository
 [React Shopping List](https://github.com/serdararici/react-shopping-list)
+
+## Deployment
+
+The app is live and hosted on GitHub Pages. You can access it through the following link:
+
+[Live Demo](https://serdararici.github.io/react-shopping-list/)
+
+Also the link --> https://serdararici.github.io/react-shopping-list/
+
 
 Feel free to explore, use, or contribute! 🚀
